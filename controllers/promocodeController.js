@@ -5,8 +5,8 @@ import Product from "../models/productModel.js";
 import Promocode from "../models/promocodeModel.js";
 
 const createPromocode = asyncHandler(async (req,res) => {
-    const {name} = req.body
-    const promocode = await new Promocode({name})
+    const {name, currency, balance} = req.body
+    const promocode = await new Promocode({name, balance})
 
     const created = await promocode.save()
     res.status(201).json(created)

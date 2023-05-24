@@ -8,6 +8,10 @@ const promocodeSchema = mongoose.Schema(
         name: {
             type: String,
             required: true
+        },
+        balance: {
+            type: String,
+            required: true
         }
     },
     {

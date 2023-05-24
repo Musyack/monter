@@ -23,6 +23,8 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
+      balance: user.balance
+
     })
   } else {
     res.status(401)
@@ -34,6 +36,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
+  let counter
   const { name, email, password, promo } = req.body
   if (!name || !email || !password){
     throw new Error('All fields except Promo are required')
@@ -58,6 +61,7 @@ const registerUser = asyncHandler(async (req, res) => {
     console.log(isPromo)
     if(isPromo){
       // return res.status(400)
+      counter = isPromo.balance
       let message = `пользователь зарегестрирован с промокодом ${promo}`
       await bot.sendMessage('1815070047', message)
 
@@ -74,7 +78,8 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
-    promo
+    promo,
+    balance: counter
   })
 
 
@@ -85,6 +90,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
+      balance: user.balance
     })
   } else {
     // res.status(400)
@@ -132,6 +138,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
+      balance: updatedUser.balance
+
     })
   } else {
     res.status(404)
